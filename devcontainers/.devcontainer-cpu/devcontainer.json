@@ -1,0 +1,37 @@
+{
+  "name": "gen-ai-cpu",
+  "image": "wilbur1240/gen-ai:cpu",
+  "settings": {
+    "terminal.integrated.defaultProfile.linux": "bash"
+  },
+  "extensions": [
+    "ms-python.python",
+    "ms-toolsai.jupyter",
+    "ms-vscode.cpptools",
+    "ms-azuretools.vscode-docker",
+    "tomoki1207.pdf",
+    "redhat.vscode-xml"
+  ],
+  "runArgs": [
+    "--privileged",
+    "--network=host",
+    "--security-opt", "seccomp=unconfined",
+    "-e", "DISPLAY=${env:DISPLAY}",
+    "-e", "XAUTHORITY=/tmp/.docker.xauth",
+    "-e", "REPO_NAME=gen-ai",
+    "-e", "HOME=/home/wilbur",
+    "-e", "OPENAI_API_KEY=${env:OPENAI_API_KEY}",
+    "-v", "/tmp/.X11-unix:/tmp/.X11-unix",
+    "-v", "/tmp/.docker.xauth:/tmp/.docker.xauth",
+    "-v", "/dev:/dev",
+    "-v", "/var/run/docker.sock:/var/run/docker.sock",
+    "-v", "/etc/localtime:/etc/localtime:ro",
+    "--user", "root:root"
+  ],
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
+  ],
+  "workspaceFolder": "/workspace",
+  "overrideCommand": true,
+  "postCreateCommand": "pip install ipykernel"
+}
